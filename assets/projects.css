@@ -107,7 +107,7 @@ main {
    ========================================= */
 #projects-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
 }
 
 #projects-header h1 {
@@ -128,25 +128,33 @@ main {
 }
 
 /* =========================================
-   PROJECT CARDS GRID (#project-list)
+   ALTERNATING HORIZONTAL SHOWCASE LAYOUT
    ========================================= */
 #project-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    counter-reset: project;
 }
 
 #project-list article {
+    counter-increment: project;
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
-    border-radius: 26px;
-    padding: 1.5rem;
+    border-radius: 30px;
+    padding: 2rem;
     box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
+    backdrop-filter: blur(12px);
     position: relative;
     overflow: hidden;
+
+    /* Split Card Grid: Image Left, Content Right */
+    display: grid;
+    grid-template-columns: 390px 1fr;
+    grid-template-rows: auto auto 1fr auto auto;
+    column-gap: 2.25rem;
+    row-gap: 0.85rem;
+    align-items: start;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -163,52 +171,66 @@ main {
 }
 
 #project-list article:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     border-color: rgba(236, 72, 153, 0.4);
-    box-shadow: 0 18px 40px -12px rgba(236, 72, 153, 0.22);
+    box-shadow: 0 20px 44px -12px rgba(236, 72, 153, 0.22);
 }
 
-/* Project Screenshot Image */
+/* Place Image on the Left Spanning All 5 Rows */
 #project-list article img {
+    grid-column: 1;
+    grid-row: 1 / 6;
     width: 100%;
-    height: 195px;
+    height: 100%;
+    min-height: 280px;
+    max-height: 350px;
     object-fit: cover;
-    border-radius: 18px;
-    margin-bottom: 1.25rem;
+    border-radius: 20px;
     border: 1px solid var(--border-soft);
     background: linear-gradient(135deg, #fce7f3, #f3e8ff);
+    transition: transform 0.35s ease;
 }
 
-/* Project Title */
+#project-list article:hover img {
+    transform: scale(1.02);
+}
+
+/* Place Text & Buttons on the Right Column */
 #project-list article h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.35;
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.3;
     color: var(--text-dark);
-    margin-bottom: 0.75rem;
 }
 
-/* Project Paragraphs */
-#project-list article p {
-    font-size: 0.94rem;
-    color: var(--text-muted);
-    margin-bottom: 0.85rem;
-}
-
-#project-list article p strong {
-    color: var(--accent-pink);
+/* Numbered Badge above Title (PROJECT 01, 02, 03) */
+#project-list article h2::before {
+    content: "PROJECT 0" counter(project);
+    display: block;
+    width: fit-content;
+    font-size: 0.72rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-pink);
+    background: var(--soft-blush);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.6rem;
 }
 
-/* Role Badge Style (1st paragraph) */
+/* Role Pill (1st paragraph) */
 #project-list article p:nth-of-type(1) {
+    grid-column: 2;
+    grid-row: 2;
     display: inline-block;
     width: fit-content;
     max-width: 100%;
-    font-size: 0.84rem;
-    background: var(--soft-blush);
+    font-size: 0.85rem;
+    background: rgba(252, 231, 243, 0.7);
     color: #9d174d;
-    padding: 0.35rem 0.85rem;
+    padding: 0.35rem 0.9rem;
     border-radius: 12px;
 }
 
@@ -216,13 +238,23 @@ main {
     color: #be185d;
 }
 
-/* Tech Stack / Tools Box (3rd paragraph) */
+/* Project Description (2nd paragraph) */
+#project-list article p:nth-of-type(2) {
+    grid-column: 2;
+    grid-row: 3;
+    font-size: 0.97rem;
+    color: var(--text-muted);
+}
+
+/* Tech Stack Box (3rd paragraph) */
 #project-list article p:nth-of-type(3) {
+    grid-column: 2;
+    grid-row: 4;
     background: rgba(243, 232, 255, 0.5);
-    border: 1px solid rgba(168, 85, 247, 0.15);
-    padding: 0.65rem 0.95rem;
+    border: 1px solid rgba(168, 85, 247, 0.16);
+    padding: 0.65rem 1rem;
     border-radius: 14px;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     color: var(--text-dark);
 }
 
@@ -232,18 +264,19 @@ main {
 
 /* Action Buttons Container */
 #project-list article div {
-    margin-top: auto;
-    padding-top: 0.75rem;
+    grid-column: 2;
+    grid-row: 5;
+    padding-top: 0.4rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.65rem;
+    gap: 0.75rem;
 }
 
 #project-list article div a {
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    padding: 0.65rem 1.25rem;
+    padding: 0.7rem 1.45rem;
     border-radius: 999px;
     transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 }
@@ -270,6 +303,21 @@ main {
 #project-list article div a:nth-child(2):hover {
     background: var(--soft-blush);
     transform: translateY(-2px);
+}
+
+/* Flip Every Even Card (Image Right, Content Left) */
+#project-list article:nth-child(even) {
+    grid-template-columns: 1fr 390px;
+}
+
+#project-list article:nth-child(even) img {
+    grid-column: 2;
+}
+
+#project-list article:nth-child(even) h2,
+#project-list article:nth-child(even) p,
+#project-list article:nth-child(even) div {
+    grid-column: 1;
 }
 
 /* =========================================
@@ -308,9 +356,9 @@ footer ul li a:hover {
 }
 
 /* =========================================
-   MOBILE RESPONSIVENESS
+   TABLET & MOBILE RESPONSIVENESS
    ========================================= */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     nav {
         flex-direction: column;
         text-align: center;
@@ -324,7 +372,29 @@ footer ul li a:hover {
         padding: 2.5rem 1.25rem 4rem;
     }
 
-    #project-list {
+    /* Stack cards vertically on smaller screens */
+    #project-list article,
+    #project-list article:nth-child(even) {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    #project-list article img,
+    #project-list article:nth-child(even) img,
+    #project-list article h2,
+    #project-list article p,
+    #project-list article div,
+    #project-list article:nth-child(even) h2,
+    #project-list article:nth-child(even) p,
+    #project-list article:nth-child(even) div {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    #project-list article img {
+        height: 210px;
+        min-height: unset;
     }
 }

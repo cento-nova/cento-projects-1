@@ -103,11 +103,14 @@ main {
 }
 
 /* =========================================
-   HERO SECTION (#hero)
+   HERO SECTION WITH PROFILE PICTURE (#hero)
    ========================================= */
 #hero {
-    text-align: center;
-    padding: 4.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 3.75rem 3rem;
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
     border-radius: 32px;
@@ -118,19 +121,13 @@ main {
     overflow: hidden;
 }
 
-#hero::before {
-    content: "";
-    position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, rgba(236, 72, 153, 0.14), transparent 70%);
-    pointer-events: none;
+.hero-content {
+    flex: 1;
+    text-align: left;
 }
 
 #hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-size: clamp(2.1rem, 4.5vw, 3.3rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.15;
@@ -142,30 +139,30 @@ main {
 
 #hero h2 {
     display: inline-block;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--accent-pink);
     background-color: var(--soft-blush);
-    padding: 0.45rem 1.2rem;
+    padding: 0.4rem 1.1rem;
     border-radius: 999px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.35rem;
 }
 
 #hero p {
-    max-width: 620px;
-    margin: 0 auto 2.25rem;
+    max-width: 560px;
+    margin: 0 0 2rem;
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
-#hero div {
+.hero-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1rem;
     flex-wrap: wrap;
 }
 
-#hero div a {
+.hero-buttons a {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
@@ -175,27 +172,64 @@ main {
 }
 
 /* Primary Pill CTA Button */
-#hero div a:first-child {
+.hero-buttons a:first-child {
     background: var(--gradient-primary);
     color: #ffffff;
     box-shadow: 0 8px 20px -6px rgba(236, 72, 153, 0.5);
 }
 
-#hero div a:first-child:hover {
+.hero-buttons a:first-child:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 26px -6px rgba(236, 72, 153, 0.65);
 }
 
 /* Secondary Outline Pill CTA Button */
-#hero div a:last-child {
+.hero-buttons a:last-child {
     background: #ffffff;
     color: var(--accent-pink);
     border: 1.5px solid rgba(236, 72, 153, 0.35);
 }
 
-#hero div a:last-child:hover {
+.hero-buttons a:last-child:hover {
     background: var(--soft-blush);
     transform: translateY(-3px);
+}
+
+/* Profile Picture Styling */
+.hero-image {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Soft Blush-Lavender Glow Behind Photo */
+.hero-image::before {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    opacity: 0.22;
+    filter: blur(20px);
+    z-index: -1;
+}
+
+.hero-image img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    border: 6px solid #ffffff;
+    box-shadow:
+        0 0 0 4px rgba(236, 72, 153, 0.28),
+        0 20px 40px -12px rgba(236, 72, 153, 0.3);
+    background: linear-gradient(135deg, #fce7f3, #f3e8ff);
+    transition: transform 0.35s ease;
+}
+
+.hero-image img:hover {
+    transform: scale(1.03);
 }
 
 /* =========================================
@@ -329,7 +363,27 @@ footer ul li a:hover {
     }
 
     #hero {
-        padding: 3rem 1.25rem;
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 2.75rem 1.5rem;
+        gap: 2rem;
         margin-bottom: 3rem;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    #hero p {
+        margin: 0 auto 2rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-image img {
+        width: 190px;
+        height: 190px;
     }
 }
