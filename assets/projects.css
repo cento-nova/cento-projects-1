@@ -93,37 +93,72 @@ nav ul li a:hover {
     color: var(--accent-pink);
 }
 
-/* Main Grid Container (Bento Layout) */
+/* Main Container (Single Column Stack for Projects Page) */
 main {
     flex: 1;
     width: 100%;
     max-width: 1100px;
     margin: 0 auto;
     padding: 3.5rem 1.5rem 5rem;
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    gap: 2rem;
-    align-items: start;
 }
 
-/* Shared Glass Card Styles */
-#bio,
-#education,
-#certifications {
+/* =========================================
+   PROJECTS HEADER (#projects-header)
+   ========================================= */
+#projects-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+#projects-header h1 {
+    font-size: clamp(2.2rem, 4.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.6rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#projects-header p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+/* =========================================
+   ALTERNATING HORIZONTAL SHOWCASE (#project-list)
+   ========================================= */
+#project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    counter-reset: project;
+}
+
+#project-list article {
+    counter-increment: project;
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
-    border-radius: 28px;
-    padding: 2.5rem;
+    border-radius: 30px;
+    padding: 2rem;
     box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     position: relative;
     overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 390px 1fr;
+    grid-template-rows: auto auto 1fr auto auto;
+    column-gap: 2.25rem;
+    row-gap: 0.85rem;
+    align-items: start;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Top Gradient Accent Bar for Cards */
-#bio::before,
-#education::before,
-#certifications::before {
+/* Top Gradient Accent Bar */
+#project-list article::before {
     content: "";
     position: absolute;
     top: 0;
@@ -134,211 +169,152 @@ main {
     opacity: 0.85;
 }
 
-/* =========================================
-   BIO SECTION (Split Hero Card)
-   ========================================= */
-#bio {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    grid-template-rows: auto auto auto auto;
-    column-gap: 2.5rem;
-    row-gap: 0.9rem;
-    align-items: center;
+#project-list article:hover {
+    transform: translateY(-5px);
+    border-color: rgba(236, 72, 153, 0.4);
+    box-shadow: 0 20px 44px -12px rgba(236, 72, 153, 0.22);
 }
 
-#bio img {
+/* Project Image */
+#project-list article img {
     grid-column: 1;
-    grid-row: 1 / 5;
-    width: 210px;
-    height: 210px;
+    grid-row: 1 / 6;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    max-height: 350px;
     object-fit: cover;
-    border-radius: 50%;
-    display: block;
-    border: 6px solid #ffffff;
-    box-shadow:
-        0 0 0 4px rgba(236, 72, 153, 0.28),
-        0 18px 36px -12px rgba(236, 72, 153, 0.28);
+    border-radius: 20px;
+    border: 1px solid var(--border-soft);
     background: linear-gradient(135deg, #fce7f3, #f3e8ff);
     transition: transform 0.35s ease;
 }
 
-#bio img:hover {
-    transform: scale(1.03);
+#project-list article:hover img {
+    transform: scale(1.02);
 }
 
-#bio h1 {
+/* Project Title */
+#project-list article h2 {
     grid-column: 2;
     grid-row: 1;
-    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-size: 1.45rem;
     font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+    color: var(--text-dark);
 }
 
-#bio p:nth-of-type(1) {
+/* Auto Number Badge */
+#project-list article h2::before {
+    content: "PROJECT 0" counter(project);
+    display: block;
+    width: fit-content;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-pink);
+    background: var(--soft-blush);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.6rem;
+}
+
+/* Role Pill */
+#project-list article p:nth-of-type(1) {
     grid-column: 2;
     grid-row: 2;
-    color: var(--text-muted);
-    font-size: 1rem;
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    font-size: 0.85rem;
+    background: rgba(252, 231, 243, 0.7);
+    color: #9d174d;
+    padding: 0.35rem 0.9rem;
+    border-radius: 12px;
 }
 
-#bio p:nth-of-type(2) {
+#project-list article p:nth-of-type(1) strong {
+    color: #be185d;
+}
+
+/* Project Description */
+#project-list article p:nth-of-type(2) {
     grid-column: 2;
     grid-row: 3;
+    font-size: 0.97rem;
     color: var(--text-muted);
-    font-size: 1rem;
 }
 
-/* Download Resume Pill Button */
-#bio a {
+/* Tech Stack / Tools Box */
+#project-list article p:nth-of-type(3) {
     grid-column: 2;
     grid-row: 4;
-    width: fit-content;
-    margin-top: 0.4rem;
-    text-decoration: none;
-    background: var(--gradient-primary);
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 0.85rem 2rem;
-    border-radius: 999px;
-    box-shadow: 0 8px 20px -6px rgba(236, 72, 153, 0.5);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-#bio a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px -6px rgba(236, 72, 153, 0.65);
-}
-
-/* =========================================
-   EDUCATION SECTION (#education)
-   ========================================= */
-#education h2,
-#certifications h2 {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-    color: var(--text-dark);
-}
-
-#education article {
-    border-left: 3px solid rgba(236, 72, 153, 0.35);
-    padding-left: 1.5rem;
-    position: relative;
-}
-
-/* Timeline Dot */
-#education article::before {
-    content: "";
-    position: absolute;
-    left: -8px;
-    top: 4px;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    box-shadow: 0 0 0 4px var(--soft-blush);
-}
-
-#education article h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 0.3rem;
-}
-
-#education article p:nth-of-type(1) {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    font-weight: 500;
-}
-
-/* Graduation Pill Badge */
-#education article p:nth-of-type(2) {
-    display: inline-block;
-    margin-top: 0.6rem;
-    background: var(--soft-blush);
-    color: #9d174d;
-    font-size: 0.84rem;
-    font-weight: 600;
-    padding: 0.3rem 0.9rem;
-    border-radius: 999px;
-}
-
-#education article h4 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: var(--accent-pink);
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-
-/* Coursework Pills */
-#education ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-}
-
-#education ul li {
-    background: rgba(252, 231, 243, 0.65);
-    border: 1px solid rgba(236, 72, 153, 0.15);
-    color: #9d174d;
-    font-weight: 600;
-    font-size: 0.86rem;
-    padding: 0.45rem 0.95rem;
-    border-radius: 999px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-#education ul li:hover {
-    transform: translateY(-2px);
-    background: #fbcfe8;
-}
-
-/* =========================================
-   CERTIFICATIONS SECTION (#certifications)
-   ========================================= */
-#certifications ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-}
-
-#certifications ul li {
     background: rgba(243, 232, 255, 0.5);
     border: 1px solid rgba(168, 85, 247, 0.16);
-    border-radius: 16px;
-    padding: 1rem 1.2rem;
+    padding: 0.65rem 1rem;
+    border-radius: 14px;
+    font-size: 0.88rem;
     color: var(--text-dark);
-    font-weight: 500;
-    font-size: 0.93rem;
+}
+
+#project-list article p:nth-of-type(3) strong {
+    color: var(--accent-lavender);
+}
+
+/* Action Buttons */
+#project-list article div {
+    grid-column: 2;
+    grid-row: 5;
+    padding-top: 0.4rem;
     display: flex;
-    align-items: flex-start;
-    gap: 0.65rem;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
-#certifications ul li::before {
-    content: "✦";
+#project-list article div a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.7rem 1.45rem;
+    border-radius: 999px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+#project-list article div a:first-child {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    box-shadow: 0 6px 16px -5px rgba(236, 72, 153, 0.45);
+}
+
+#project-list article div a:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(236, 72, 153, 0.6);
+}
+
+#project-list article div a:nth-child(2) {
+    background: #ffffff;
     color: var(--accent-pink);
-    font-weight: 700;
-    flex-shrink: 0;
+    border: 1.5px solid rgba(236, 72, 153, 0.35);
 }
 
-#certifications ul li:hover {
-    transform: translateX(4px);
-    background: rgba(243, 232, 255, 0.85);
+#project-list article div a:nth-child(2):hover {
+    background: var(--soft-blush);
+    transform: translateY(-2px);
+}
+
+/* Flip Every Even Project Card (Image Right, Text Left) */
+#project-list article:nth-child(even) {
+    grid-template-columns: 1fr 390px;
+}
+
+#project-list article:nth-child(even) img {
+    grid-column: 2;
+}
+
+#project-list article:nth-child(even) h2,
+#project-list article:nth-child(even) p,
+#project-list article:nth-child(even) div {
+    grid-column: 1;
 }
 
 /* =========================================
@@ -379,7 +355,7 @@ footer ul li a:hover {
 /* =========================================
    TABLET & MOBILE RESPONSIVENESS
    ========================================= */
-@media (max-width: 820px) {
+@media (max-width: 850px) {
     nav {
         flex-direction: column;
         text-align: center;
@@ -390,40 +366,31 @@ footer ul li a:hover {
     }
 
     main {
-        grid-template-columns: 1fr;
         padding: 2.5rem 1.25rem 4rem;
     }
 
-    #bio {
+    #project-list article,
+    #project-list article:nth-child(even) {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
-        text-align: center;
-        padding: 2rem 1.5rem;
+        padding: 1.5rem;
+        gap: 1rem;
     }
 
-    #bio img {
-        grid-column: 1;
-        grid-row: auto;
-        width: 170px;
-        height: 170px;
-        margin: 0 auto 0.5rem;
-    }
-
-    #bio h1,
-    #bio p:nth-of-type(1),
-    #bio p:nth-of-type(2) {
+    #project-list article img,
+    #project-list article:nth-child(even) img,
+    #project-list article h2,
+    #project-list article p,
+    #project-list article div,
+    #project-list article:nth-child(even) h2,
+    #project-list article:nth-child(even) p,
+    #project-list article:nth-child(even) div {
         grid-column: 1;
         grid-row: auto;
     }
 
-    #bio a {
-        grid-column: 1;
-        grid-row: auto;
-        margin: 0.5rem auto 0;
-    }
-
-    #education,
-    #certifications {
-        padding: 1.75rem 1.35rem;
+    #project-list article img {
+        height: 210px;
+        min-height: unset;
     }
 }
